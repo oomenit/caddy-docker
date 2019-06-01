@@ -4,7 +4,7 @@
 FROM abiosoft/caddy:builder as builder
 
 ARG version="0.11.5"
-ARG plugins="git,filebrowser,cors,realip,expires,cache,jwt,docker,cloudflare"
+ARG plugins="git,filebrowser,cors,realip,expires,cache,jwt,cloudflare"
 
 # process wrapper
 RUN go get -v github.com/abiosoft/parent
@@ -43,5 +43,5 @@ COPY index.html /srv/index.html
 COPY --from=builder /go/bin/parent /bin/parent
 
 ENTRYPOINT ["/bin/parent", "caddy"]
-CMD ["--log", "stdout", "--agree=$ACME_AGREE"]
+CMD ["--conf", "/etc/Caddyfile", "--log", "stdout", "--agree=$ACME_AGREE"]
 
